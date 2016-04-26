@@ -32,29 +32,68 @@ $(function() {
          * and that the URL is not empty.
          */
 
+        it('urls are defined', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.url).toBeDefined();
+                expect(feed.url.length).not.toBe(0);
+            });
+        });
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+
+        it('names are defined', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.name).toBeDefined();
+                expect(feed.name.length).not.toBe(0);
+            });
+        });
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
+    describe('The Menu', function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+        it('is hidden by default', function() {
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
 
-         /* TODO: Write a test that ensures the menu changes
+        /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+        it('changes state when clicked', function() {
+            var menuIcon = $('.menu-icon-link');
 
+            // use jQuery to trigger a click event and make sure menu is not hidden
+            menuIcon.trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
+
+            // use jQuery to trigger a click event and make sure menu is hidden
+            menuIcon.trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
+
+    });
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function() {
+
+        beforeEach(function(done){
+            // clear the items from the feed
+            $('.feed').empty();
+
+            loadFeed(0, function(){
+                done();
+            });
+        });
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -62,11 +101,50 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        it('has at least one element', function(done) {
+            // use jQuery to check that there items with class entry in the div
+            // that has class feed
+            expect($('.feed').find('.entry').size()).toBeGreaterThan(0);
+            done();
+        });
+    });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+
+    // TODO: Write a new test suite named "New Feed Selection"
+    describe('New Feed Selection', function() {
+        var beforeHeadlines,
+            afterHeadlines;
+
+        beforeEach(function(done){
+            $('.feed').empty();
+
+            // load feed 0 and grab the headlines
+            loadFeed(0, function(){
+                //use jQuery to get the text of any h2 elements in the feed div
+                beforeHeadlines = $('.feed').find('h2').text();
+
+                // now load feed 1 and grab the headlines
+                loadFeed(1, function(){
+                    //use jQuery to get the text of any h2 elements in the feed div
+                    afterHeadlines = $('.feed').find('h2').text();
+                    done();
+                });
+            });
+        });
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+        it('changes content', function(done) {
+            // make sure entries were actually retrieved from the api
+            expect(beforeHeadlines).toBeDefined();
+            expect(afterHeadlines).toBeDefined();
+
+            // make sure the content is changed
+            expect(beforeHeadlines).not.toEqual(afterHeadlines);
+            done();
+        });
+    });
 }());
