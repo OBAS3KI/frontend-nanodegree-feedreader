@@ -1,5 +1,9 @@
-# Run application
-Open the link in your browser [UdaciFeeds](http://obas3ki.github.io/) http://obas3ki.github.io/
+# Instructions To Run The Project
+1. Download the repo to your local storage
+2. Open project folder
+3. Open index.html in your browser preferably google Chrome
+
+Or you can check the live version by opening this link in your browser [UdaciFeeds](http://obas3ki.github.io/)
 
 # Project Overview
 
