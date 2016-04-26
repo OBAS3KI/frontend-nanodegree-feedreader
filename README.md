@@ -1,5 +1,5 @@
 # Run application
-[UdaciFeeds](http://obas3ki.github.io/)
+Open the link in your browser [UdaciFeeds](http://obas3ki.github.io/) http://obas3ki.github.io/
 
 # Project Overview
 
